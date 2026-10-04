@@ -12,10 +12,9 @@ if [ ! -d /mnt/us/documents ]; then
     exit 1
 fi
 
-SCRIPTLET=/mnt/us/documents/한국일보\ 크로스워드.sh
-LEGACY_SCRIPTLET=/mnt/us/documents/Korean\ Crossword.sh
+SCRIPTLET=/mnt/us/documents/Korean\ Crossword.sh
 ICON=/mnt/us/korean-crossword-icon.png
-BACKUP=/mnt/us/documents/한국일보\ 크로스워드.sh.bak
+BACKUP=/mnt/us/documents/Korean\ Crossword.sh.bak
 if [ -f "$SCRIPTLET" ]; then
     cp "$SCRIPTLET" "$BACKUP"
 fi
@@ -26,7 +25,6 @@ if ! cp "$SELF_DIR/scriptlet/korean-crossword.sh" "$SCRIPTLET"; then
     echo "설치 실패: 기존 Scriptlet을 복구했습니다." >&2
     exit 1
 fi
-rm -f "$LEGACY_SCRIPTLET"
 if ! cp "$SELF_DIR/assets/korean-crossword-icon.png" "$ICON"; then
     if [ -f "$BACKUP" ]; then
         cp "$BACKUP" "$SCRIPTLET"
