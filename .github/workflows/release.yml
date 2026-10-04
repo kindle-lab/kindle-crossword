@@ -1,0 +1,36 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run host tests
+        run: make test
+      - name: Install Kindle ARM toolchain
+        run: sudo apt-get update && sudo apt-get install -y gcc-arm-linux-gnueabihf
+      - name: Build and verify Kindle package
+        run: |
+          make clean
+          make package CROSS_CC=arm-linux-gnueabihf-gcc
+          mkdir -p release-assets
+          cp dist/korean-crossword-kindlehf.kpkg release-assets/
+          cp dist/SHA256SUMS release-assets/
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            release-assets/korean-crossword-kindlehf.kpkg \
+            release-assets/SHA256SUMS \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "한국일보 크로스워드 $GITHUB_REF_NAME" \
+            --generate-notes

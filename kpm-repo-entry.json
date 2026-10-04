@@ -1,0 +1,15 @@
+{
+  "korean-crossword": {
+    "name": "한국일보 크로스워드",
+    "author": "kindle-lab",
+    "description": "한국일보 오늘의 크로스워드를 Kindle에서 풀어 보는 독립 클라이언트",
+    "artifacts": [
+      {
+        "url": "packages/korean-crossword/artifacts/korean-crossword_0.1.0_kindlehf.kpkg",
+        "version": [0, 1, 0],
+        "dependencies": [{"id": "kterm", "min": [2, 6, 0]}],
+        "supported_platforms": ["kindlehf"]
+      }
+    ]
+  }
+}

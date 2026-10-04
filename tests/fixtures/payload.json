@@ -1,0 +1,13 @@
+{
+  "statusCode": 200,
+  "body": {
+    "across": {
+      "1": {"answer": "경유", "row": 1, "col": 1, "clue": "연료", "definition": "연료", "articleUrl": "https://www.hankookilbo.com/"},
+      "2": {"answer": "불구속기소", "row": 1, "col": 4, "clue": "재판", "definition": "재판", "articleUrl": ""}
+    },
+    "down": {
+      "1": {"answer": "유도", "row": 1, "col": 2, "clue": "운동", "definition": "운동", "articleUrl": ""},
+      "2": {"answer": "항소", "row": 0, "col": 8, "clue": "소송", "definition": "소송", "articleUrl": ""}
+    }
+  }
+}
