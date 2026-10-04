@@ -18,9 +18,10 @@ $(BIN): src/main.c src/crossword.c src/crossword.h | $(BUILD)
 
 test: $(BIN)
 	sh tests/test_parser.sh ./$(BIN)
+	sh tests/test-app.sh
 
 package:
-	CROSS_CC="$${CROSS_CC:-arm-kindlehf-linux-gnueabihf-gcc}" PLATFORM=kindlehf tools/build-kpkg.sh
+	PLATFORM=kindlehf CROSSWORD_VERSION="$${CROSSWORD_VERSION:-0.2.0}" tools/build-kpkg.sh
 
 clean:
 	rm -rf $(BUILD) dist

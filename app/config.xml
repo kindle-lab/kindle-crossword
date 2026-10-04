@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget id="kindle.lab.korean.crossword" version="0.2.0" viewmodes="application"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:kindle="http://kindle.amazon.com/widgets">
+  <name xml:lang="en">Korean Crossword</name>
+  <description xml:lang="en">Korean Crossword standalone Kindle app</description>
+  <content src="index.html" />
+  <access origin="*" />
+  <kindle:gestures>
+    <kindle:param name="tap" value="yes" properties="fire_on_tap:1 max_updown_delta:0" />
+    <kindle:param name="swipe" value="yes" />
+  </kindle:gestures>
+  <feature name="http://kindle.amazon.com/apis" required="true">
+    <param name="appmgr" value="yes" />
+    <param name="net" value="yes" />
+    <param name="gestures" value="yes" />
+    <param name="chrome" value="yes" />
+    <param name="storage" value="yes" />
+  </feature>
+  <kindle:settings>
+    <kindle:setting name="internetRequired" value="no" />
+    <kindle:setting name="saveContext" value="no" />
+    <kindle:setting name="disable-wua-features" value="yes" />
+  </kindle:settings>
+</widget>

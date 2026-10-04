@@ -2,12 +2,12 @@
   "korean-crossword": {
     "name": "한국일보 크로스워드",
     "author": "kindle-lab",
-    "description": "한국일보 오늘의 크로스워드를 Kindle에서 풀어 보는 독립 클라이언트",
+    "description": "한국일보 오늘의 크로스워드를 Kindle 독립 앱에서 풀어 보는 클라이언트",
     "artifacts": [
       {
-        "url": "packages/korean-crossword/artifacts/korean-crossword_0.1.3_kindlehf.kpkg",
-        "version": [0, 1, 3],
-        "dependencies": [{"id": "kterm", "min": [2, 6, 0]}],
+        "url": "packages/korean-crossword/artifacts/korean-crossword_0.2.0_kindlehf.kpkg",
+        "version": [0, 2, 0],
+        "dependencies": [],
         "supported_platforms": ["kindlehf"]
       }
     ]

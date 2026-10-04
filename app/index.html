@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>한국일보 크로스워드</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <main id="app" aria-label="한국일보 크로스워드">
+    <header class="app-heading">
+      <div class="eyebrow">KINDLE PUZZLE</div>
+      <h1>한국일보 크로스워드</h1>
+      <div class="toolbar">
+        <label for="history">퍼즐</label>
+        <select id="history" aria-label="퍼즐 날짜"></select>
+        <button id="reload" type="button">새로고침</button>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <div id="grid" class="grid" role="grid" aria-label="십자말풀이 격자"></div>
+      <section class="clue-card" aria-live="polite">
+        <div id="clue-label" class="clue-label">가로 1</div>
+        <div id="clue-text" class="clue-text">퍼즐을 불러오는 중입니다.</div>
+        <div id="definition" class="definition"></div>
+      </section>
+      <section class="answer-card">
+        <label for="answer-input">정답 입력</label>
+        <input id="answer-input" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <div class="answer-actions">
+          <button id="check" type="button">정답 확인</button>
+          <button id="clear" type="button">지우기</button>
+          <button id="previous" type="button">이전</button>
+          <button id="next" type="button">다음</button>
+        </div>
+      </section>
+      <div id="status" class="status" role="status"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      var chromeBar = {
+        appId: "kindle.lab.korean.crossword",
+        topNavBar: {
+          template: "title",
+          title: "한국일보 크로스워드",
+          buttons: [
+            { id: "KPP_MORE", state: "enabled", handling: "system" },
+            { id: "KPP_CLOSE", state: "enabled", handling: "system" }
+          ]
+        }
+      };
+      function configureChrome() {
+        if (window.kindle && window.kindle.messaging) {
+          window.kindle.messaging.sendMessage("com.lab126.chromebar", "configureChrome", chromeBar);
+        }
+      }
+      if (window.kindle && window.kindle.appmgr) {
+        window.kindle.appmgr.ongo = function () { configureChrome(); };
+      }
+      configureChrome();
+    }());
+  </script>
+</body>
+</html>
