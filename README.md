@@ -11,7 +11,7 @@
 5. 실행 시 저장된 날짜 목록에서 과거 퍼즐을 고를 수 있습니다.
 6. KPM Scriptlet에서 KTerm을 열어 터미널 기반 입력 화면을 실행합니다.
 
-설치 스크립트는 Kindle Library에 보이는 `Korean Crossword.sh` 실행 항목과 `/mnt/us/korean-crossword-icon.png` 아이콘을 함께 등록합니다. 앱 패키지는 실행 파일만 넣고 Library 등록을 빠뜨리지 않는 것을 원칙으로 합니다.
+설치 스크립트는 Kindle Library에 보이는 `한국일보 크로스워드.sh` 실행 항목과 `/mnt/us/korean-crossword-icon.png` 아이콘을 함께 등록합니다. 앱 패키지는 실행 파일만 넣고 Library 등록을 빠뜨리지 않는 것을 원칙으로 합니다.
 
 한국어 IME는 자동 설치하지 않습니다. 이미 `kindle-lab/kindle-korean-ime`를 사용 중이면 같은 네이티브 입력 경로를 그대로 활용할 수 있도록 KTerm 입력 환경에 의존합니다. IME의 기기별 동작 자체는 이 저장소에서 보증하지 않습니다.
 
@@ -32,7 +32,7 @@ make package CROSS_CC=arm-kindlehf-linux-gnueabihf-gcc
 
 산출물은 `dist/korean-crossword-kindlehf.kpkg`와 `dist/SHA256SUMS`입니다. 현재 작업 환경에는 Kindle ARM 크로스 컴파일러가 없어 실제 `.kpkg` 생성은 기기용 빌드 환경에서 수행해야 합니다.
 
-GitHub에 `v0.1.1` 같은 태그를 push하면 Actions가 ARM 패키지를 만들고 GitHub Release에 `.kpkg`와 체크섬을 올립니다. 그 Release asset을 Kindle로 내려받아 KPM으로 설치할 수 있습니다.
+GitHub에 `v0.1.2` 같은 태그를 push하면 Actions가 ARM 패키지를 만들고 GitHub Release에 `.kpkg`와 체크섬을 올립니다. 그 Release asset을 Kindle로 내려받아 KPM으로 설치할 수 있습니다.
 
 ## KPM 설치
 

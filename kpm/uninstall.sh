@@ -1,9 +1,9 @@
 #!/bin/sh
 set -eu
 
-SCRIPTLET=/mnt/us/documents/Korean\ Crossword.sh
+SCRIPTLET=/mnt/us/documents/한국일보\ 크로스워드.sh
 ICON=/mnt/us/korean-crossword-icon.png
-BACKUP=/mnt/us/documents/Korean\ Crossword.sh.bak
+BACKUP=/mnt/us/documents/한국일보\ 크로스워드.sh.bak
 if [ -f "$BACKUP" ]; then
     mv "$BACKUP" "$SCRIPTLET"
 elif [ -f "$SCRIPTLET" ]; then
