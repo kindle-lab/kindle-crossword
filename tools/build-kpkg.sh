@@ -25,19 +25,21 @@ mkdir -p "$ROOT/build" "$ROOT/dist"
 STAGE=$(mktemp -d "$ROOT/dist/.korean-crossword.XXXXXX")
 cleanup() { rm -rf "$STAGE"; }
 trap cleanup EXIT HUP INT TERM
-mkdir -p "$STAGE/bin" "$STAGE/scripts" "$STAGE/scriptlet"
+mkdir -p "$STAGE/bin" "$STAGE/scripts" "$STAGE/scriptlet" "$STAGE/assets"
 cp "$ROOT/kpm/manifest.json" "$ROOT/kpm/launch.sh" "$ROOT/kpm/install.sh" \
     "$ROOT/kpm/uninstall.sh" "$ROOT/run-ui.sh" "$STAGE/"
 cp "$ROOT/scripts/fetch-puzzle.sh" "$STAGE/scripts/"
 cp "$ROOT/kpm/scriptlet/korean-crossword.sh" "$STAGE/scriptlet/"
+cp "$ROOT/assets/korean-crossword-icon.png" "$STAGE/assets/"
 cp "$ROOT/build/korean-crossword" "$STAGE/bin/"
 chmod 700 "$STAGE"/*.sh "$STAGE/scripts/fetch-puzzle.sh" \
     "$STAGE/scriptlet/korean-crossword.sh" "$STAGE/bin/korean-crossword"
+chmod 644 "$STAGE/assets/korean-crossword-icon.png"
 
 ARCHIVE="$ROOT/dist/korean-crossword-${PLATFORM}.kpkg"
 rm -f "$ARCHIVE"
 tar -C "$STAGE" -czf "$ARCHIVE" \
-    manifest.json launch.sh install.sh uninstall.sh run-ui.sh scripts scriptlet bin
+    manifest.json launch.sh install.sh uninstall.sh run-ui.sh assets scripts scriptlet bin
 python3 "$ROOT/tools/verify-package.py" "$ARCHIVE"
 sha256sum "$ARCHIVE" >"$ROOT/dist/SHA256SUMS"
 echo "$ARCHIVE"

@@ -15,12 +15,17 @@ with tarfile.open(archive_path, "r:gz") as archive:
     required = (
         "manifest.json", "launch.sh", "install.sh", "uninstall.sh", "run-ui.sh",
         "scripts/fetch-puzzle.sh", "scriptlet/korean-crossword.sh",
-        "bin/korean-crossword",
+        "bin/korean-crossword", "assets/korean-crossword-icon.png",
     )
     for path in required:
         assert path in names, f"missing {path}"
     for path in required[1:]:
-        assert archive.getmember(path).mode & 0o100, f"{path} must be executable"
+        if path != "assets/korean-crossword-icon.png":
+            assert archive.getmember(path).mode & 0o100, f"{path} must be executable"
+    icon = archive.extractfile("assets/korean-crossword-icon.png").read()
+    assert icon[:8] == b"\x89PNG\r\n\x1a\n", "icon must be a PNG"
+    width, height = struct.unpack(">II", icon[16:24])
+    assert (width, height) == (128, 128), "icon must be 128x128"
     data = archive.extractfile("bin/korean-crossword").read()
     assert data[:4] == b"\x7fELF", "binary must be an ELF executable"
     if data[4] == 1:
