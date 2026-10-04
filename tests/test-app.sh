@@ -5,7 +5,7 @@ test -f "$ROOT/app/config.xml"
 test -f "$ROOT/app/index.html"
 test -f "$ROOT/app/app.js"
 test -f "$ROOT/app/app.css"
-grep -F 'kindle.lab.korean.crossword' "$ROOT/app/config.xml" >/dev/null
+grep -F 'kindle.lab.crossword' "$ROOT/app/config.xml" >/dev/null
 grep -F 'http://kindle.amazon.com/ns/widget-extensions' "$ROOT/app/config.xml" >/dev/null
 grep -F 'window.kindle' "$ROOT/app/index.html" >/dev/null
 grep -F 'id="answer-input"' "$ROOT/app/index.html" >/dev/null

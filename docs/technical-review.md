@@ -9,11 +9,11 @@
 `kpm/install.sh`는 `app/`을 `/var/local/mesquite/korean-crossword`에 설치하고 `appreg.db`에 다음 등록을 만듭니다.
 
 ```text
-app id:  kindle.lab.korean.crossword
-command: /usr/bin/mesquite -l kindle.lab.korean.crossword -c file:///var/local/mesquite/korean-crossword/
+app id:  kindle.lab.crossword
+command: /usr/bin/mesquite -l kindle.lab.crossword -c file:///var/local/mesquite/korean-crossword/
 ```
 
-Library Scriptlet은 KPM을 통해 `appmgrd`의 `app://kindle.lab.korean.crossword`를 실행합니다. KTerm, KUAL, 터미널 relay는 패키지 실행 경로에 없습니다.
+Library Scriptlet은 KPM을 통해 `appmgrd`의 `app://kindle.lab.crossword`를 실행합니다. KTerm, KUAL, 터미널 relay는 패키지 실행 경로에 없습니다.
 
 ## 한글 입력 경로
 

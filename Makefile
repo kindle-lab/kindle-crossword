@@ -21,7 +21,7 @@ test: $(BIN)
 	sh tests/test-app.sh
 
 package:
-	PLATFORM=kindlehf CROSSWORD_VERSION="$${CROSSWORD_VERSION:-0.2.1}" tools/build-kpkg.sh
+	PLATFORM=kindlehf CROSSWORD_VERSION="$${CROSSWORD_VERSION:-0.3.0}" tools/build-kpkg.sh
 
 clean:
 	rm -rf $(BUILD) dist

@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<widget id="kindle.lab.korean.crossword" version="0.2.1" viewmodes="application"
-        xmlns="http://www.w3.org/ns/widgets"
+<?xml version="1.0"?>
+<widget id="kindle.lab.crossword" version="0.3.0" viewmodes="application" xmlns="http://www.w3.org/ns/widgets"
         xmlns:kindle="http://kindle.amazon.com/ns/widget-extensions">
   <name xml:lang="en">Korean Crossword</name>
-  <description xml:lang="en">Korean Crossword standalone Kindle app</description>
+  <description xml:lang="en">Korean Crossword</description>
   <content src="index.html" />
-  <access origin="*" />
+
   <kindle:permissions>
     <kindle:permission name="local-port-access" />
   </kindle:permissions>
@@ -22,6 +21,12 @@
     <kindle:asset key="overrideProxy" value="none" />
     <kindle:asset key="enableCaching" value="false" />
   </kindle:network>
+  <kindle:cookiejar>
+    <kindle:asset key="persistent" value="true" />
+    <kindle:asset key="usePrivateCookies" value="false" />
+    <kindle:asset key="useDeviceCookies" value="true" />
+    <kindle:asset key="useAccessToken" value="true" />
+  </kindle:cookiejar>
   <kindle:chrome>
     <kindle:asset key="configureSearchBar" value="system" />
   </kindle:chrome>
@@ -35,12 +40,22 @@
     <param name="todo" value="yes" />
     <param name="gestures" value="yes" />
     <param name="chrome" value="yes" />
+    <param name="dev" value="yes" />
+    <param name="dconfig" value="yes" />
+    <param name="download" value="yes" />
     <param name="messaging" value="yes" />
+    <param name="uitest" value="yes" />
+    <param name="popup" value="yes" />
+    <param name="bkgrnd" value="yes" />
     <param name="localprefs" value="yes" />
+    <param name="device" value="yes" />
+    <param name="winmgrUtils" value="yes" />
+    <param name="bluetooth" value="yes" />
   </feature>
   <kindle:messaging>
     <kindle:app name="com.lab126.pillow" value="yes" />
     <kindle:app name="com.lab126.chromebar" value="yes" />
+    <kindle:app name="com.lab126.readnow" value="yes" />
   </kindle:messaging>
   <kindle:resources>
     <kindle:asset key="AllowHTTPSApplicationManifestCrossDomain" value="true" />

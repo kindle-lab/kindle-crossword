@@ -33,7 +33,7 @@ make package
 - `dist/korean-crossword-kindlehf.kpkg`
 - `dist/SHA256SUMS`
 
-GitHub의 최신 `v0.2.1` 태그 Release에는 같은 패키지가 올라갑니다. KPM 저장소에 등록된 artifact 경로는 `kpm-repo-entry.json`에 있습니다.
+GitHub의 최신 `v0.3.0` 태그 Release에는 같은 패키지가 올라갑니다. KPM 저장소에 등록된 artifact 경로는 `kpm-repo-entry.json`에 있습니다.
 
 ## KPM 설치
 
