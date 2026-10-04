@@ -3,7 +3,7 @@ set -eu
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 PLATFORM=${PLATFORM:-kindlehf}
-VERSION=${CROSSWORD_VERSION:-0.2.0}
+VERSION=${CROSSWORD_VERSION:-0.2.1}
 case "$PLATFORM" in
     kindlehf) ;;
     *) echo "this release supports kindlehf only" >&2; exit 2 ;;

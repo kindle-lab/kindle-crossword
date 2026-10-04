@@ -10,7 +10,7 @@ with tarfile.open(archive_path, "r:gz") as archive:
     manifest = json.load(archive.extractfile("manifest.json"))
     assert manifest["manifest_version"] == 2
     assert manifest["id"] == "korean-crossword"
-    assert manifest["version"] == [0, 2, 0]
+    assert manifest["version"] == [0, 2, 1]
     assert manifest["supported_platforms"] == ["kindlehf"]
     assert manifest["dependencies"] == []
     required = (
@@ -40,6 +40,7 @@ with tarfile.open(archive_path, "r:gz") as archive:
     register = archive.extractfile("scripts/register-app.sh").read().decode("utf-8")
     scriptlet = archive.extractfile("scriptlet/korean-crossword.sh").read().decode("utf-8")
     assert "kindle.lab.korean.crossword" in config
+    assert 'version="0.2.1"' in config
     assert "register-app.sh" in launch and "kterm" not in launch.lower()
     assert "mesquite" in register and "appreg.db" in register
     assert "window.kindle" in index
