@@ -111,10 +111,20 @@
   }
 
   function sizeGridCells() {
-    var width = els.grid.clientWidth, size, buttons, i;
-    if (!width) return;
-    size = Math.floor((width - 4) / 10); if (size < 28) size = 28; if (size > 54) size = 54;
-    buttons = els.grid.getElementsByTagName("button"); for (i = 0; i < buttons.length; i++) buttons[i].style.height = size + "px";
+    var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+    var viewportHeight = window.innerHeight || 800;
+    var fixedHeight, size, buttons, cells, i;
+    if (!viewportWidth || !els.grid || !els.clueCard || !els.answerCard) return;
+    fixedHeight = els.appHeading.offsetHeight + els.clueCard.offsetHeight + els.answerCard.offsetHeight + els.status.offsetHeight + 38;
+    size = Math.floor(Math.min((viewportWidth - 24) / 10, (viewportHeight - fixedHeight) / 10));
+    if (size < 20) size = 20;
+    if (size > 52) size = 52;
+    els.grid.style.width = (size * 10 + 6) + "px";
+    els.grid.style.height = (size * 10 + 6) + "px";
+    buttons = els.grid.getElementsByTagName("button");
+    for (i = 0; i < buttons.length; i++) { buttons[i].style.width = size + "px"; buttons[i].style.height = size + "px"; }
+    cells = els.grid.getElementsByTagName("td");
+    for (i = 0; i < cells.length; i++) { cells[i].style.width = size + "px"; cells[i].style.height = size + "px"; }
   }
   function safeArticle(url) { return /^https?:\/\//i.test(url || "") ? url : ""; }
 
@@ -126,11 +136,11 @@
     if (article) { els.articleLink.href = article; els.articleLink.style.display = "inline-block"; text(els.articleLink, "관련 기사에서 힌트 찾기"); }
     else { els.articleLink.removeAttribute("href"); els.articleLink.style.display = "none"; }
     els.cellInput.value = Core.cellValue(state.progress, cell.key);
-    text(els.direction, state.progress.direction === "across" ? "가로" : "세로"); text(els.sourceMeta, state.record ? recordLabel(state.record) : "");
+    text(els.direction, state.progress.direction === "across" ? "가로" : "세로");
   }
-  function renderAll() { renderHistory(); renderGrid(); renderClue(); }
+  function renderAll() { renderHistory(); renderGrid(); renderClue(); sizeGridCells(); }
 
-  function focusInput() { window.setTimeout(function () { try { els.cellInput.focus(); els.cellInput.setSelectionRange(0, els.cellInput.value.length); } catch (e) {} }, 0); }
+  function focusInput() { window.setTimeout(function () { try { els.cellInput.focus(); els.cellInput.setSelectionRange(0, els.cellInput.value.length); } catch (e) {} sizeGridCells(); }, 0); window.setTimeout(sizeGridCells, 180); }
 
   function selectCell(key, toggleDirection) {
     var cell, clue;
@@ -194,13 +204,13 @@
 
   function bind() {
     els.grid = byId("grid"); els.gridBody = byId("grid-body"); els.history = byId("history"); els.reload = byId("reload"); els.clueLabel = byId("clue-label"); els.clueText = byId("clue-text");
-    els.definition = byId("definition"); els.articleLink = byId("article-link"); els.cellInput = byId("cell-input"); els.status = byId("status"); els.direction = byId("direction"); els.sourceMeta = byId("source-meta");
+    els.definition = byId("definition"); els.articleLink = byId("article-link"); els.cellInput = byId("cell-input"); els.status = byId("status"); els.direction = byId("direction"); els.appHeading = document.getElementsByClassName("app-heading")[0]; els.clueCard = document.getElementsByClassName("clue-card")[0]; els.answerCard = document.getElementsByClassName("answer-card")[0];
     byId("check").onclick = checkCurrentClue; byId("clear").onclick = clearCell; byId("previous").onclick = function () { moveCell(-1, true); }; byId("next").onclick = function () { moveCell(1, true); };
     els.direction.onclick = toggleDirection; els.reload.onclick = requestLatest; els.history.onchange = chooseHistory;
     els.cellInput.oncompositionstart = function () { state.composing = true; };
     els.cellInput.oncompositionend = function () { state.composing = false; commitInput(true); };
     els.cellInput.oninput = function () { if (!state.composing) commitInput(true); };
-    window.onresize = sizeGridCells;
+    window.onresize = sizeGridCells; window.onorientationchange = sizeGridCells;
   }
   function start() { if (!Core) return; bind(); migrateLegacyCache(); loadLatestCached("저장된 퍼즐을 먼저 열었습니다. 최신 퍼즐을 확인합니다."); requestLatest(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();

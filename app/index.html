@@ -9,17 +9,13 @@
 <body>
   <main id="app" aria-label="한국일보 크로스워드">
     <header class="app-heading">
-      <div class="eyebrow">HANKOOK ILBO · KINDLE</div>
-      <h1>오늘의 크로스워드</h1>
-      <div id="source-meta" class="source-meta"></div>
+      <h1>한국일보 크로스워드</h1>
       <div class="toolbar">
-        <label for="history">저장된 퍼즐</label>
         <select id="history" aria-label="저장된 퍼즐"></select>
-        <button id="reload" type="button">최신 확인</button>
+        <button id="reload" type="button">최신</button>
       </div>
     </header>
     <section class="workspace">
-      <table id="grid" class="grid" role="grid" aria-label="십자말풀이 격자"><tbody id="grid-body"></tbody></table>
       <section class="clue-card" aria-live="polite">
         <div id="clue-label" class="clue-label">단서</div>
         <div id="clue-text" class="clue-text">퍼즐을 불러오는 중입니다.</div>
@@ -37,6 +33,7 @@
           <button id="check" type="button">단어 확인</button>
         </div>
       </section>
+      <table id="grid" class="grid" role="grid" aria-label="십자말풀이 격자"><tbody id="grid-body"></tbody></table>
       <div id="status" class="status" role="status"></div>
     </section>
   </main>

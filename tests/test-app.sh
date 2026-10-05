@@ -8,7 +8,7 @@ test -f "$ROOT/app/core.js"
 test -f "$ROOT/app/app.js"
 test -f "$ROOT/app/app.css"
 
-grep -F 'version="0.4.3"' "$ROOT/app/config.xml" >/dev/null
+grep -F 'version="0.4.4"' "$ROOT/app/config.xml" >/dev/null
 grep -F '<kindle:cookiejar>' "$ROOT/app/config.xml" >/dev/null
 grep -F 'maxConnectionsPerProxy' "$ROOT/app/config.xml" >/dev/null
 grep -F '<param name="todo" value="yes" />' "$ROOT/app/config.xml" >/dev/null
@@ -20,10 +20,13 @@ if grep -F '<access origin="*"' "$ROOT/app/config.xml" >/dev/null; then
     exit 1
 fi
 grep -F 'id="cell-input"' "$ROOT/app/index.html" >/dev/null
+grep -F '<h1>한국일보 크로스워드</h1>' "$ROOT/app/index.html" >/dev/null
 grep -F 'id="article-link"' "$ROOT/app/index.html" >/dev/null
 grep -F '<script src="core.js"></script>' "$ROOT/app/index.html" >/dev/null
 grep -F 'https://d3owq5b4yti859.cloudfront.net/puzzle.json' "$ROOT/app/app.js" >/dev/null
 grep -F 'Core.setCell' "$ROOT/app/app.js" >/dev/null
+grep -F 'viewportHeight' "$ROOT/app/app.js" >/dev/null
+grep -F 'style.width = (size * 10 + 6)' "$ROOT/app/app.js" >/dev/null
 grep -F 'articleUrl' "$ROOT/app/core.js" >/dev/null
 grep -F 'fingerprint' "$ROOT/app/core.js" >/dev/null
 grep -F 'associations' "$ROOT/kpm/scripts/register-app.sh" >/dev/null
