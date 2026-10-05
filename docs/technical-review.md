@@ -56,10 +56,18 @@ UI의 canonical selection은 칸이다. 표준 HTML `#cell-input`이 native focu
 
 manifest의 `internetRequired`는 `no`다. 앱 실행과 최신 퍼즐 확인을 분리하며, 다운로드 실패 시 로컬에 저장된 퍼즐을 계속 사용할 수 있다.
 
+## 2026-10-05 배포 검증
+
+- `make test`와 KPM package verifier를 통과한 v0.4.0 Release를 생성했다.
+- Release의 `korean-crossword-kindlehf.kpkg` 크기는 751126 bytes, SHA-256은 `edd6b01367335e096f9187213b0c95987456b317684c260fc364bda3c26f06b9`다.
+- `kindle-lab/kpm-repo`가 동일 Release asset을 `packages/korean-crossword/artifacts/korean-crossword_0.4.0_kindlehf.kpkg`로 미러링했고 checksum이 Release와 일치한다.
+- GitHub Actions에서 현재 CloudFront `puzzle.json`을 직접 내려받아 **배포와 동일한 `app/core.js`**로 `buildPuzzle()`하는 live-source smoke를 통과했다. 따라서 현재 서버 응답 형식과 v0.4.0 production parser의 호환성은 확인됐다.
+- 이 검증은 Kindle Mesquite의 HTTPS/XHR/CORS와 native input을 대신하지 않는다.
+
 ## 남은 실기기 검증
 
 1. Vera 탈옥 Kindle Basic 11세대에서 Library 항목과 Mesquite 실행
-2. CloudFront HTTPS XHR/CORS
+2. Mesquite에서 CloudFront HTTPS XHR/CORS
 3. `kindle-korean-ime` 조합 이벤트가 `#cell-input`에 전달되는지
 4. 터치 후 포커스와 자동 다음 칸 이동
 5. 기사 링크가 Kindle에서 열리고 퍼즐로 복귀 가능한지
