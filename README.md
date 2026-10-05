@@ -60,7 +60,7 @@ make package
 - `dist/korean-crossword-kindlehf.kpkg`
 - `dist/SHA256SUMS`
 
-태그 `v0.4.5`을 push하면 GitHub Actions가 같은 검증을 거쳐 Release asset을 만듭니다.
+태그 `v0.4.6`을 push하면 GitHub Actions가 같은 검증을 거쳐 Release asset을 만듭니다.
 
 ## KPM 설치
 

@@ -157,10 +157,13 @@
     var clue = currentClue(), next; if (!clue) return;
     next = Core.nextCellKey(clue, state.progress.selectedKey, delta); state.progress.selectedKey = next; saveProgress(); renderAll(); if (focus) focusInput();
   }
+  function isPartialHangul(value) {
+    return !!value && !/[\uAC00-\uD7A3]/.test(value) && /[\u1100-\u11FF\u3131-\u318E\uA960-\uA97F\uD7B0-\uD7FF]/.test(value);
+  }
   function commitInput(advance) {
     var key, value; if (!state.puzzle || !state.progress) return;
     key = state.progress.selectedKey; value = els.cellInput.value.replace(/\s/g, ""); Core.setCell(state.puzzle, state.progress, key, value); saveProgress();
-    if (advance && value) moveCell(1, true); else { renderGrid(); renderClue(); }
+    if (advance && value && !isPartialHangul(value)) moveCell(1, true); else { renderGrid(); renderClue(); }
   }
   function clearCell() { if (!state.puzzle || !state.progress) return; Core.setCell(state.puzzle, state.progress, state.progress.selectedKey, ""); saveProgress(); renderAll(); focusInput(); }
   function checkCurrentClue() {
@@ -208,8 +211,8 @@
     byId("check").onclick = checkCurrentClue; byId("clear").onclick = clearCell; byId("previous").onclick = function () { moveCell(-1, true); }; byId("next").onclick = function () { moveCell(1, true); };
     els.direction.onclick = toggleDirection; els.reload.onclick = requestLatest; els.history.onchange = chooseHistory;
     els.cellInput.oncompositionstart = function () { state.composing = true; };
-    els.cellInput.oncompositionend = function () { state.composing = false; commitInput(true); };
-    els.cellInput.oninput = function () { if (!state.composing) commitInput(true); };
+    els.cellInput.oncompositionend = function () { state.composing = false; window.setTimeout(function () { commitInput(true); }, 0); };
+    els.cellInput.oninput = function () { if (!state.composing) commitInput(!isPartialHangul(els.cellInput.value.replace(/\s/g, ""))); };
     window.onresize = sizeGridCells; window.onorientationchange = sizeGridCells;
   }
   function start() { if (!Core) return; bind(); migrateLegacyCache(); loadLatestCached("저장된 퍼즐을 먼저 열었습니다. 최신 퍼즐을 확인합니다."); requestLatest(); }

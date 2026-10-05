@@ -7,7 +7,7 @@ test:
 	sh tests/test-app.sh
 
 package:
-	PLATFORM=kindlehf CROSSWORD_VERSION="$${CROSSWORD_VERSION:-0.4.5}" tools/build-kpkg.sh
+	PLATFORM=kindlehf CROSSWORD_VERSION="$${CROSSWORD_VERSION:-0.4.6}" tools/build-kpkg.sh
 
 clean:
 	rm -rf build dist

@@ -5,8 +5,8 @@
     "description": "한국일보 실제 크로스워드를 Kindle에서 푸는 독립 클라이언트",
     "artifacts": [
       {
-        "url": "packages/korean-crossword/artifacts/korean-crossword_0.4.5_kindlehf.kpkg",
-        "version": [0, 4, 5],
+        "url": "packages/korean-crossword/artifacts/korean-crossword_0.4.6_kindlehf.kpkg",
+        "version": [0, 4, 6],
         "dependencies": [],
         "supported_platforms": ["kindlehf"]
       }

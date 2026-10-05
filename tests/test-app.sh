@@ -8,7 +8,7 @@ test -f "$ROOT/app/core.js"
 test -f "$ROOT/app/app.js"
 test -f "$ROOT/app/app.css"
 
-grep -F 'version="0.4.5"' "$ROOT/app/config.xml" >/dev/null
+grep -F 'version="0.4.6"' "$ROOT/app/config.xml" >/dev/null
 grep -F '<kindle:cookiejar>' "$ROOT/app/config.xml" >/dev/null
 grep -F 'maxConnectionsPerProxy' "$ROOT/app/config.xml" >/dev/null
 grep -F '<param name="todo" value="yes" />' "$ROOT/app/config.xml" >/dev/null
@@ -28,6 +28,8 @@ grep -F 'id="article-link"' "$ROOT/app/index.html" >/dev/null
 grep -F '<script src="core.js"></script>' "$ROOT/app/index.html" >/dev/null
 grep -F 'https://d3owq5b4yti859.cloudfront.net/puzzle.json' "$ROOT/app/app.js" >/dev/null
 grep -F 'Core.setCell' "$ROOT/app/app.js" >/dev/null
+grep -F 'isPartialHangul' "$ROOT/app/app.js" >/dev/null
+grep -F 'oncompositionend' "$ROOT/app/app.js" >/dev/null
 grep -F 'viewportHeight' "$ROOT/app/app.js" >/dev/null
 grep -F 'style.width = (size * 10 + 6)' "$ROOT/app/app.js" >/dev/null
 grep -F 'articleUrl' "$ROOT/app/core.js" >/dev/null
