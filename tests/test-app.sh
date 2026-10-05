@@ -8,7 +8,7 @@ test -f "$ROOT/app/core.js"
 test -f "$ROOT/app/app.js"
 test -f "$ROOT/app/app.css"
 
-grep -F 'version="0.4.1"' "$ROOT/app/config.xml" >/dev/null
+grep -F 'version="0.4.2"' "$ROOT/app/config.xml" >/dev/null
 grep -F '<kindle:cookiejar>' "$ROOT/app/config.xml" >/dev/null
 grep -F 'maxConnectionsPerProxy' "$ROOT/app/config.xml" >/dev/null
 grep -F '<param name="todo" value="yes" />' "$ROOT/app/config.xml" >/dev/null
@@ -26,6 +26,9 @@ grep -F 'https://d3owq5b4yti859.cloudfront.net/puzzle.json' "$ROOT/app/app.js" >
 grep -F 'Core.setCell' "$ROOT/app/app.js" >/dev/null
 grep -F 'articleUrl' "$ROOT/app/core.js" >/dev/null
 grep -F 'fingerprint' "$ROOT/app/core.js" >/dev/null
+grep -F 'associations' "$ROOT/kpm/scripts/register-app.sh" >/dev/null
+grep -F "'application','GL:$APP_ID'" "$ROOT/kpm/scripts/register-app.sh" >/dev/null 2>&1 || grep -F "'application','GL:\$APP_ID'" "$ROOT/kpm/scripts/register-app.sh" >/dev/null
+grep -F 'sleep 2' "$ROOT/kpm/launch.sh" >/dev/null
 if grep -F 'state.entries' "$ROOT/app/app.js" >/dev/null; then
     echo "word-centric state must not return" >&2
     exit 1
