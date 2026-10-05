@@ -32,6 +32,7 @@ trap 'rollback' HUP INT TERM
 rm -rf "$TMP_TARGET"
 mkdir -p /var/local/mesquite "$TMP_TARGET"
 cp -R "$SELF_DIR/app/." "$TMP_TARGET/"
+chmod 755 /var/local/mesquite "$TMP_TARGET"
 chmod 644 "$TMP_TARGET/config.xml" "$TMP_TARGET/index.html" "$TMP_TARGET/core.js" "$TMP_TARGET/app.js" "$TMP_TARGET/app.css"
 if [ -e "$TARGET" ]; then rm -rf "$OLD_TARGET"; mv "$TARGET" "$OLD_TARGET"; fi
 mv "$TMP_TARGET" "$TARGET"

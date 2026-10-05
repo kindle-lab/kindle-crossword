@@ -61,6 +61,7 @@ with tarfile.open(archive_path, "r:gz") as archive:
     assert "XMLHttpRequest" in app_js and "localStorage" in app_js
     assert "Core.setCell" in app_js
     assert "kterm" not in install.lower()
+    assert 'chmod 755 /var/local/mesquite "$TMP_TARGET"' in install
     assert "/mnt/us/korean-crossword-cover.png" in scriptlet
     assert "/mnt/us/documents/Korean Crossword.sh" in install
 print("Verified Korean Crossword Mesquite KPM package v0.4.2")
