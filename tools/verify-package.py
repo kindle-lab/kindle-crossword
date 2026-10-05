@@ -10,7 +10,7 @@ with tarfile.open(archive_path, "r:gz") as archive:
     manifest = json.load(archive.extractfile("manifest.json"))
     assert manifest["manifest_version"] == 2
     assert manifest["id"] == "korean-crossword"
-    assert manifest["version"] == [0, 4, 1]
+    assert manifest["version"] == [0, 4, 2]
     assert manifest["supported_platforms"] == ["kindlehf"]
     assert manifest["dependencies"] == []
     required = (
@@ -39,9 +39,10 @@ with tarfile.open(archive_path, "r:gz") as archive:
     launch = archive.extractfile("launch.sh").read().decode("utf-8")
     install = archive.extractfile("install.sh").read().decode("utf-8")
     register = archive.extractfile("scripts/register-app.sh").read().decode("utf-8")
+    unregister = archive.extractfile("scripts/unregister-app.sh").read().decode("utf-8")
     scriptlet = archive.extractfile("scriptlet/korean-crossword.sh").read().decode("utf-8")
     assert "kindle.lab.crossword" in config
-    assert 'version="0.4.1"' in config
+    assert 'version="0.4.2"' in config
     assert '<kindle:cookiejar>' in config
     assert 'maxConnectionsPerProxy' in config
     assert '<param name="todo" value="yes" />' in config
@@ -49,8 +50,10 @@ with tarfile.open(archive_path, "r:gz") as archive:
     assert '<kindle:app name="com.lab126.readnow" value="yes" />' in config
     assert 'internetRequired" value="yes"' in config
     assert '<access origin="*"' not in config
-    assert "register-app.sh" in launch and "kterm" not in launch.lower()
+    assert "register-app.sh" in launch and "sleep 2" in launch and "kterm" not in launch.lower()
     assert "mesquite" in register and "appreg.db" in register
+    assert "associations" in register and "GL:$APP_ID" in register
+    assert "associations" in unregister
     assert "window.kindle" in index
     assert 'id="cell-input"' in index
     assert 'id="article-link"' in index
@@ -60,4 +63,4 @@ with tarfile.open(archive_path, "r:gz") as archive:
     assert "kterm" not in install.lower()
     assert "/mnt/us/korean-crossword-cover.png" in scriptlet
     assert "/mnt/us/documents/Korean Crossword.sh" in install
-print("Verified Korean Crossword Mesquite KPM package v0.4.1")
+print("Verified Korean Crossword Mesquite KPM package v0.4.2")
