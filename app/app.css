@@ -4,17 +4,16 @@ body { min-width: 320px; overflow-x: hidden; }
 button, select, input { font: inherit; color: #111; }
 button, select { min-height: 40px; border: 2px solid #111; border-radius: 3px; background: #fff; padding: 6px 8px; }
 button:active { background: #111; color: #fff; }
-#app { width: 100%; max-width: 620px; margin: 0 auto; padding: 7px 12px 10px; }
-.app-heading { display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #111; padding-bottom: 6px; }
-h1 { flex: 0 0 auto; margin: 0; font-size: 20px; line-height: 1.1; white-space: nowrap; }
-.toolbar { display: flex; flex: 1 1 auto; min-width: 0; gap: 5px; }
-#history { width: 100%; min-width: 0; min-height: 34px; padding: 3px 5px; }
-#reload { flex: 0 0 52px; min-height: 34px; padding: 3px 4px; }
-.workspace { padding-top: 7px; }
+#app { width: 100%; max-width: 620px; margin: 0 auto; padding: 3px 10px 8px; }
+.app-heading { border-bottom: 1px solid #111; padding-bottom: 3px; }
+.toolbar { white-space: nowrap; }
+#history { display: inline-block; width: 78%; min-width: 0; min-height: 29px; height: 29px; padding: 2px 4px; font-size: 14px; vertical-align: middle; }
+#reload { display: inline-block; width: 20%; min-height: 29px; height: 29px; padding: 2px 3px; font-size: 14px; vertical-align: middle; }
+.workspace { padding-top: 4px; }
 .clue-card { margin: 0 0 7px; border: 2px solid #111; border-radius: 3px; padding: 7px 9px; }
 .clue-label { font-size: 13px; font-weight: bold; margin-bottom: 2px; }
-.clue-text { min-height: 22px; font-size: 18px; font-weight: bold; line-height: 1.18; }
-.definition { margin-top: 3px; font-size: 13px; line-height: 1.15; }
+.clue-text { min-height: 22px; font-family: serif; font-size: 21px; font-weight: bold; line-height: 1.25; }
+.definition { margin-top: 3px; font-family: serif; font-size: 15px; line-height: 1.2; }
 .article-link { display: none; margin-top: 5px; padding: 4px 6px; border: 2px solid #111; color: #111; text-decoration: none; font-size: 13px; font-weight: bold; }
 .grid { width: 100px; height: 100px; margin: 0 auto 7px; border: 3px solid #111; border-collapse: collapse; table-layout: fixed; background: #111; }
 .grid td { width: 10%; height: 10px; padding: 0; border: 1px solid #111; position: relative; background: #fff; }
@@ -37,11 +36,11 @@ h1 { flex: 0 0 auto; margin: 0; font-size: 20px; line-height: 1.1; white-space: 
 .status.error { text-decoration: underline; }
 
 @media (max-height: 700px) {
-  #app { padding-top: 4px; }
-  .workspace { padding-top: 4px; }
+  #app { padding-top: 2px; }
+  .workspace { padding-top: 3px; }
   .clue-card { margin-bottom: 4px; padding: 5px 7px; }
-  .clue-text { font-size: 16px; }
-  .definition { font-size: 12px; }
+  .clue-text { font-size: 19px; }
+  .definition { font-size: 14px; }
   .grid { margin-bottom: 4px; }
   #cell-input { min-height: 38px; }
   .answer-actions { margin-top: 3px; }
