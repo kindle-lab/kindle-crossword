@@ -2,36 +2,36 @@
 html, body { margin: 0; padding: 0; background: #fff; color: #111; font-family: sans-serif; }
 body { min-width: 320px; }
 button, select, input { font: inherit; color: #111; }
-button, select { min-height: 42px; border: 2px solid #111; border-radius: 4px; background: #fff; padding: 6px 12px; }
-button:active, button.selected { background: #111; color: #fff; }
-#app { max-width: 620px; margin: 0 auto; padding: 18px 20px 28px; }
-.app-heading { border-bottom: 3px solid #111; padding-bottom: 12px; }
-.eyebrow { font-size: 11px; letter-spacing: 2px; font-weight: bold; }
-h1 { margin: 3px 0 12px; font-size: 25px; line-height: 1.15; }
-.toolbar { display: flex; align-items: center; gap: 8px; }
-.toolbar label { font-weight: bold; white-space: nowrap; }
-#history { flex: 1; min-width: 0; }
-.workspace { padding-top: 16px; }
-.grid { width: min(88vw, 500px); aspect-ratio: 1 / 1; margin: 0 auto 16px; display: grid; grid-template-columns: repeat(10, 1fr); border: 3px solid #111; background: #111; gap: 1px; }
-.cell { position: relative; border: 0; border-radius: 0; min-height: 0; padding: 0; background: #fff; }
-.cell.block { background: #111; }
-.cell.active { outline: 4px solid #777; outline-offset: -4px; background: #ddd; }
-.cell.correct { background: #eee; }
+button, select { min-height: 40px; border: 2px solid #111; border-radius: 3px; background: #fff; padding: 6px 8px; }
+button:active { background: #111; color: #fff; }
+#app { width: 100%; max-width: 620px; margin: 0 auto; padding: 14px 16px 24px; }
+.app-heading { border-bottom: 3px solid #111; padding-bottom: 10px; }
+.eyebrow { font-size: 11px; letter-spacing: 1px; font-weight: bold; }
+h1 { margin: 3px 0 2px; font-size: 25px; line-height: 1.15; }
+.source-meta { min-height: 18px; margin-bottom: 8px; font-size: 12px; }
+.toolbar label { display: block; margin-bottom: 4px; font-weight: bold; }
+#history { width: 68%; vertical-align: middle; }
+#reload { width: 29%; vertical-align: middle; }
+.workspace { padding-top: 12px; }
+.grid { width: 100%; max-width: 520px; margin: 0 auto 12px; border: 3px solid #111; border-collapse: collapse; table-layout: fixed; background: #111; }
+.grid td { width: 10%; padding: 0; border: 1px solid #111; position: relative; background: #fff; }
+.grid td button { position: relative; display: block; width: 100%; min-height: 0; margin: 0; padding: 0; border: 0; border-radius: 0; background: #fff; overflow: hidden; }
+.grid td.block, .grid td.block button { background: #111; }
+.grid td.active button { outline: 4px solid #666; outline-offset: -4px; background: #ddd; }
+.grid td.correct button { background: #eee; }
 .cell-number { position: absolute; top: 1px; left: 2px; font-size: 9px; line-height: 1; font-weight: bold; }
-.cell-letter { display: block; padding-top: 8px; font-size: clamp(14px, 4vw, 25px); line-height: 1.1; text-align: center; font-weight: bold; }
-.clue-card, .answer-card { border: 2px solid #111; border-radius: 4px; padding: 12px; margin-top: 12px; }
+.cell-letter { display: block; padding-top: 8px; font-size: 23px; line-height: 1; text-align: center; font-weight: bold; }
+.clue-card, .answer-card { border: 2px solid #111; border-radius: 3px; padding: 10px; margin-top: 9px; }
 .clue-label { font-size: 14px; font-weight: bold; margin-bottom: 4px; }
-.clue-text { min-height: 24px; font-size: 19px; font-weight: bold; line-height: 1.3; }
-.definition { margin-top: 5px; font-size: 14px; }
+.clue-text { min-height: 24px; font-size: 19px; font-weight: bold; line-height: 1.35; }
+.definition { margin-top: 5px; font-size: 14px; line-height: 1.3; }
+.article-link { display: none; margin-top: 9px; padding: 7px 8px; border: 2px solid #111; color: #111; text-decoration: none; font-weight: bold; }
 .answer-card label { display: block; font-weight: bold; margin-bottom: 5px; }
-#answer-input { display: block; width: 100%; min-height: 52px; border: 3px solid #111; border-radius: 4px; padding: 7px 10px; font-size: 24px; line-height: 1.2; background: #fff; }
-#answer-input:focus { outline: 4px solid #777; outline-offset: 1px; }
-.answer-actions { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 6px; margin-top: 8px; }
-.answer-actions button { padding-left: 4px; padding-right: 4px; }
-.status { min-height: 25px; margin-top: 10px; font-size: 15px; font-weight: bold; }
-.status.error { color: #111; text-decoration: underline; }
-@media (max-height: 720px) {
-  #app { padding-top: 10px; }
-  .grid { width: min(74vw, 420px); margin-bottom: 8px; }
-  .clue-card, .answer-card { margin-top: 7px; padding: 8px; }
-}
+#cell-input { display: block; width: 100%; min-height: 50px; border: 3px solid #111; border-radius: 3px; padding: 6px 9px; font-size: 25px; line-height: 1.2; background: #fff; }
+#cell-input:focus { outline: 4px solid #777; outline-offset: 1px; }
+.answer-actions { margin-top: 7px; }
+.answer-actions button { width: 31%; margin: 2px 1% 2px 0; padding-left: 3px; padding-right: 3px; }
+#check { width: 47%; }
+#clear { width: 47%; }
+.status { min-height: 24px; margin-top: 9px; font-size: 14px; font-weight: bold; }
+.status.error { text-decoration: underline; }

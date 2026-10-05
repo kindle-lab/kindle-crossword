@@ -1,20 +1,30 @@
 #!/bin/sh
 set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+
 test -f "$ROOT/app/config.xml"
 test -f "$ROOT/app/index.html"
+test -f "$ROOT/app/core.js"
 test -f "$ROOT/app/app.js"
 test -f "$ROOT/app/app.css"
-grep -F 'kindle.lab.crossword' "$ROOT/app/config.xml" >/dev/null
-grep -F 'http://kindle.amazon.com/ns/widget-extensions' "$ROOT/app/config.xml" >/dev/null
-grep -F 'window.kindle' "$ROOT/app/index.html" >/dev/null
-grep -F 'id="answer-input"' "$ROOT/app/index.html" >/dev/null
-grep -F 'localStorage' "$ROOT/app/app.js" >/dev/null
-grep -F 'XMLHttpRequest' "$ROOT/app/app.js" >/dev/null
-grep -F 'register-app.sh' "$ROOT/kpm/launch.sh" >/dev/null
-grep -F 'mesquite' "$ROOT/kpm/scripts/register-app.sh" >/dev/null
+
+grep -F 'version="0.4.0"' "$ROOT/app/config.xml" >/dev/null
+grep -F 'internetRequired" value="no"' "$ROOT/app/config.xml" >/dev/null
+grep -F '<access origin="*"' "$ROOT/app/config.xml" >/dev/null
+grep -F 'id="cell-input"' "$ROOT/app/index.html" >/dev/null
+grep -F 'id="article-link"' "$ROOT/app/index.html" >/dev/null
+grep -F '<script src="core.js"></script>' "$ROOT/app/index.html" >/dev/null
+grep -F 'https://d3owq5b4yti859.cloudfront.net/puzzle.json' "$ROOT/app/app.js" >/dev/null
+grep -F 'Core.setCell' "$ROOT/app/app.js" >/dev/null
+grep -F 'articleUrl' "$ROOT/app/core.js" >/dev/null
+grep -F 'fingerprint' "$ROOT/app/core.js" >/dev/null
+if grep -F 'state.entries' "$ROOT/app/app.js" >/dev/null; then
+    echo "word-centric state must not return" >&2
+    exit 1
+fi
 if grep -R -i 'kterm' "$ROOT/kpm" "$ROOT/app" >/dev/null; then
     echo "KTerm must not be part of the standalone app" >&2
     exit 1
 fi
-echo "standalone app tests passed"
+
+echo "standalone app contract tests passed"

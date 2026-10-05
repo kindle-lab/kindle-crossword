@@ -1,36 +1,66 @@
-# 기술 검토
+# 기술 검토 — v0.4.0 재설계
 
-## 이전 구현의 문제
+## 왜 다시 설계했나
 
-이전 `v0.1.x`는 KTerm을 실행하고 터미널 입력을 화면으로 사용했습니다. 따라서 Kindle Library에서 책처럼 열리는 독립 앱이 아니었고, `kindle-korean-ime`가 기대하는 기본 Kindle 입력 포커스도 만들지 못했습니다. 이 버전은 이전 아키텍처를 유지보수하지 않고 `v0.2.0`에서 교체합니다.
+v0.3.x는 CloudFront의 실제 퍼즐 응답을 찾고 Mesquite 독립 앱까지 연결했지만, 구현 목표가 KPM/Library/Mesquite 통합에 치우쳤다. 단어별 답안을 따로 저장해 교차점 상태가 모순될 수 있었고, `articleUrl`을 읽고도 UI에서 버렸으며, Kindle 로컬 날짜를 퍼즐 날짜처럼 캐시 키에 사용했다.
 
-## 현재 구조
+v0.4.0은 `docs/product-contract.md`를 제품 기준으로 삼고, 데이터 해독과 Kindle 패키징 사이의 게임 코어를 재작성한다.
 
-`kpm/install.sh`는 `app/`을 `/var/local/mesquite/korean-crossword`에 설치하고 `appreg.db`에 다음 등록을 만듭니다.
+## 실제 데이터 경로
+
+앱은 다음 endpoint를 직접 읽는다.
 
 ```text
-app id:  kindle.lab.crossword
-command: /usr/bin/mesquite -l kindle.lab.crossword -c file:///var/local/mesquite/korean-crossword/
+https://d3owq5b4yti859.cloudfront.net/puzzle.json
 ```
 
-Library Scriptlet은 KPM을 통해 `appmgrd`의 `app://kindle.lab.crossword`를 실행합니다. KTerm, KUAL, 터미널 relay는 패키지 실행 경로에 없습니다.
+`encode_data`가 있으면 JWT 형태의 가운데 Base64URL 구간을 UTF-8 JSON으로 해독한다. 일반 JSON과 문자열 `body`도 처리한다.
 
-## 한글 입력 경로
+## 새 코어
 
-앱은 `#answer-input`이라는 표준 HTML text input을 화면에 표시하고, 단서 칸을 선택할 때 `.focus()`합니다. 이 입력창이 Kindle의 native focus window가 되면 기존 `kindle-korean-ime` X11/native bridge가 조합한 한글을 앱 입력값으로 전달할 수 있습니다.
+`app/core.js`는 Kindle 앱과 Node 회귀 테스트가 함께 사용하는 단일 로직이다.
 
-이 연결은 코드상 입력창과 포커스까지 마련한 상태입니다. Kindle WebKit/펌웨어별 focus window 전달과 실제 조합은 실기기에서 확인해야 합니다.
+- 10×10 좌표 검증
+- 가로/세로 교차 문자 검증
+- `clue`, `definition`, `articleUrl` 보존
+- source ID/date 추출
+- content fingerprint 생성
+- cell-centric 진행상태
+- 현재 칸 상태 기반 정답 판정
 
-## 퍼즐 데이터
+기존 C 파서는 실제 Kindle 런타임과 다른 중복 구현이어서 제거한다.
 
-앱 JS는 현재 endpoint의 `encode_data` 래퍼와 일반 JSON 응답을 모두 처리합니다. 가로 단서는 `(row, col+i)`, 세로 단서는 `(row+i, col)`로 10×10 격자에 배치하고, 교차 문자가 다르면 해당 퍼즐을 거부합니다.
+## 캐시
 
-호스트 C parser는 응답 형식과 좌표 규칙을 별도로 회귀 테스트하는 용도이며 Kindle에서 실행되지 않습니다.
+v4 키 공간을 사용한다.
+
+```text
+crossword:v4:puzzle:<puzzle-id>
+crossword:v4:progress:<puzzle-id>
+crossword:v4:index
+```
+
+동일 퍼즐은 동일 ID로 갱신되므로 Kindle 날짜가 바뀌었다고 중복 저장되지 않는다. 원본 응답에 날짜가 없으면 UI는 날짜를 추정하지 않고 `저장본`이라고 표시한다.
+
+v0.3.x `crossword:puzzle:*` raw 캐시는 읽어서 v4로 옮길 수 있지만, 단어별 `:answers` 진행상태는 이관하지 않는다.
+
+## 입력
+
+UI의 canonical selection은 칸이다. 표준 HTML `#cell-input`이 native focus를 제공하고, 한글 조합이 끝난 문자를 선택 칸에 넣은 뒤 현재 단어의 다음 칸으로 이동한다. 교차점에서 방향을 바꿀 수 있다.
+
+## 기사 연결
+
+문제의 `articleUrl`이 HTTP(S) URL이면 `관련 기사에서 힌트 찾기` 링크를 표시한다. 퍼즐이 뉴스 기사와 연결된 원제품 성격을 제거하지 않는다.
+
+## 오프라인
+
+manifest의 `internetRequired`는 `no`다. 앱 실행과 최신 퍼즐 확인을 분리하며, 다운로드 실패 시 로컬에 저장된 퍼즐을 계속 사용할 수 있다.
 
 ## 남은 실기기 검증
 
-1. Library에 세로 표지와 `Korean Crossword` 항목이 표시되는지
-2. Scriptlet이 Mesquite 화면을 여는지
-3. 표준 입력창을 눌렀을 때 기본 Kindle 입력 경로가 활성화되는지
-4. `kindle-korean-ime`로 한글을 입력하고 교차 칸에 반영되는지
-5. 네트워크 실패 후 캐시 퍼즐과 답안이 열리는지
+1. Vera 탈옥 Kindle Basic 11세대에서 Library 항목과 Mesquite 실행
+2. CloudFront HTTPS XHR/CORS
+3. `kindle-korean-ime` 조합 이벤트가 `#cell-input`에 전달되는지
+4. 터치 후 포커스와 자동 다음 칸 이동
+5. 기사 링크가 Kindle에서 열리고 퍼즐로 복귀 가능한지
+6. E-Ink 화면 갱신과 격자 크기

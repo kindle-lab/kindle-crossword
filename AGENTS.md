@@ -1,13 +1,26 @@
-# Kindle 앱 제작 필수 규칙
+# Kindle 크로스워드 작업 규칙
 
-이 저장소의 Kindle 앱 작업에서는 아래 항목을 구현하지 않은 상태를 완료로 표시하지 않는다.
+이 저장소의 목적은 **한국일보 PlayGround가 제공하는 실제 오늘의 크로스워드를 Kindle Basic 11세대에서 원본 퍼즐·단서·기사 연결을 유지한 채 풀 수 있게 하는 것**이다. Kindle 쪽 구현 방식은 이 목표를 위한 수단이다.
 
-1. KPM `.kpkg`만 사용하고 KUAL 실행 경로를 만들지 않는다.
-2. Kindle Library에서 책처럼 보이고 실행되도록 `/mnt/us/documents/<앱 제목>.sh` Scriptlet을 설치한다. 파일명, Scriptlet의 `Name`·`Title`, manifest의 `name`을 같은 사용자-facing 제목으로 맞춘다.
-3. Scriptlet에는 `Name`, `Author`, `Icon` 주석을 넣고, 아이콘 파일을 패키지와 `/mnt/us`에 함께 포함한다.
-4. 아이콘은 Kindle Library에서 식별 가능한 고대비 흑백 PNG로 만들고 패키지 검증기에서 크기와 존재 여부를 검사한다.
-5. 앱은 KTerm·터미널이 아니라 `/usr/bin/mesquite`가 여는 독립 local HTML 앱으로 구현한다. Library Scriptlet은 등록된 app id를 `appmgrd`로 실행한다.
-6. 한글 입력은 앱 안에 실제로 보이는 표준 HTML `input`을 두고 포커스한다. KTerm 입력 릴레이나 앱 자체 가상 키보드만으로 대체하지 않는다. 기존 `kindle-korean-ime` 네이티브 브리지가 이 포커스를 사용할 수 있어야 한다.
-7. 설치·업데이트 실패 시 기존 Scriptlet과 앱 디렉터리를 복구하고, 제거 시 캐시·설정·진행 상태를 삭제하지 않는다.
-8. `make test`, KPM archive 검사, 실제 Release asset 접근 확인을 모두 수행한다.
-9. 기기에서 Library 항목 표시, 독립 앱 실행, 네트워크 다운로드, 오프라인 캐시, 기존 IME 포커스를 확인하기 전에는 실기기 완료로 표현하지 않는다.
+작업 전 `docs/product-contract.md`를 먼저 읽고, 아래 규칙을 지킨다.
+
+## 제품 불변조건
+
+1. 퍼즐의 source of truth는 한국일보가 배포하는 실제 퍼즐 응답이다. 샘플/fixture를 실제 퍼즐처럼 대체하지 않는다.
+2. Kindle 로컬 날짜를 퍼즐 ID로 사용하지 않는다. 응답의 `puzzleId/date`가 있으면 우선하고, 없으면 문제·정답·좌표·기사 링크의 안정적 fingerprint로 동일 퍼즐을 식별한다.
+3. 사용자 입력의 canonical state는 **칸 하나당 문자 하나**다. 가로/세로 답을 별도 문자열로 저장해 교차점이 서로 다른 문자를 가질 수 있게 만들지 않는다.
+4. 정답 판정은 항상 현재 칸 상태에서 즉시 계산한다. 한 교차 문자가 바뀌면 관련 가로·세로 단어의 판정도 즉시 바뀌어야 한다.
+5. 원본 응답의 `clue`, `definition`, `articleUrl`을 보존한다. 기사 링크가 있는 문제는 Kindle UI에서 접근 가능해야 한다.
+6. 서버의 과거 퍼즐 아카이브를 실제로 조회하지 않는 한, 로컬 캐시는 반드시 **저장된 퍼즐**이라고 부른다. 열어보지 않은 날짜의 과거 퍼즐이 있다고 암시하지 않는다.
+7. 최신 퍼즐 다운로드 실패와 앱 실행 실패를 분리한다. 저장된 퍼즐이 있으면 네트워크 없이 앱이 열려야 한다.
+8. 실제 런타임과 같은 JavaScript 코어(`app/core.js`)를 테스트한다. 사용하지 않는 별도 파서의 성공으로 앱 로직 성공을 대신하지 않는다.
+
+## Kindle 통합 규칙
+
+1. KPM `.kpkg`만 사용하고 KUAL/KTerm 실행 경로를 만들지 않는다.
+2. Kindle Library에서 책처럼 보이고 실행되도록 `/mnt/us/documents/Korean Crossword.sh` Scriptlet을 설치한다.
+3. 앱은 `/usr/bin/mesquite`가 여는 독립 local HTML 앱으로 구현한다.
+4. 한글 입력은 화면에 보이는 표준 HTML `input`을 사용한다. 기존 `kindle-korean-ime` 네이티브 브리지가 포커스를 사용할 수 있어야 한다.
+5. 설치·업데이트 실패 시 기존 Scriptlet과 앱 디렉터리를 복구하고, 제거 시 캐시·설정·진행 상태를 삭제하지 않는다.
+6. 패키지 검증과 코어 회귀 테스트를 모두 통과해야 한다.
+7. 실제 Kindle에서 Library 표시, Mesquite 실행, 최신 퍼즐 다운로드, 오프라인 실행, 터치, 한글 조합 입력, 기사 링크를 확인하기 전에는 실기기 완료로 표현하지 않는다.

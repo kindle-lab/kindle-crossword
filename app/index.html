@@ -9,57 +9,46 @@
 <body>
   <main id="app" aria-label="한국일보 크로스워드">
     <header class="app-heading">
-      <div class="eyebrow">KINDLE PUZZLE</div>
-      <h1>한국일보 크로스워드</h1>
+      <div class="eyebrow">HANKOOK ILBO · KINDLE</div>
+      <h1>오늘의 크로스워드</h1>
+      <div id="source-meta" class="source-meta"></div>
       <div class="toolbar">
-        <label for="history">퍼즐</label>
-        <select id="history" aria-label="퍼즐 날짜"></select>
-        <button id="reload" type="button">새로고침</button>
+        <label for="history">저장된 퍼즐</label>
+        <select id="history" aria-label="저장된 퍼즐"></select>
+        <button id="reload" type="button">최신 확인</button>
       </div>
     </header>
-
     <section class="workspace">
-      <div id="grid" class="grid" role="grid" aria-label="십자말풀이 격자"></div>
+      <table id="grid" class="grid" role="grid" aria-label="십자말풀이 격자"><tbody id="grid-body"></tbody></table>
       <section class="clue-card" aria-live="polite">
-        <div id="clue-label" class="clue-label">가로 1</div>
+        <div id="clue-label" class="clue-label">단서</div>
         <div id="clue-text" class="clue-text">퍼즐을 불러오는 중입니다.</div>
         <div id="definition" class="definition"></div>
+        <a id="article-link" class="article-link" href="#" target="_blank">관련 기사에서 힌트 찾기</a>
       </section>
       <section class="answer-card">
-        <label for="answer-input">정답 입력</label>
-        <input id="answer-input" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <label for="cell-input">선택한 칸 입력</label>
+        <input id="cell-input" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false">
         <div class="answer-actions">
-          <button id="check" type="button">정답 확인</button>
-          <button id="clear" type="button">지우기</button>
-          <button id="previous" type="button">이전</button>
-          <button id="next" type="button">다음</button>
+          <button id="direction" type="button">가로</button>
+          <button id="previous" type="button">이전 칸</button>
+          <button id="next" type="button">다음 칸</button>
+          <button id="clear" type="button">칸 지우기</button>
+          <button id="check" type="button">단어 확인</button>
         </div>
       </section>
       <div id="status" class="status" role="status"></div>
     </section>
   </main>
+  <script src="core.js"></script>
   <script src="app.js"></script>
   <script>
     (function () {
-      var chromeBar = {
-        appId: "kindle.lab.crossword",
-        topNavBar: {
-          template: "title",
-          title: "한국일보 크로스워드",
-          buttons: [
-            { id: "KPP_MORE", state: "enabled", handling: "system" },
-            { id: "KPP_CLOSE", state: "enabled", handling: "system" }
-          ]
-        }
-      };
-      function configureChrome() {
-        if (window.kindle && window.kindle.messaging) {
-          window.kindle.messaging.sendMessage("com.lab126.chromebar", "configureChrome", chromeBar);
-        }
-      }
-      if (window.kindle && window.kindle.appmgr) {
-        window.kindle.appmgr.ongo = function () { configureChrome(); };
-      }
+      var chromeBar = { appId: "kindle.lab.crossword", topNavBar: { template: "title", title: "한국일보 크로스워드", buttons: [
+        { id: "KPP_MORE", state: "enabled", handling: "system" }, { id: "KPP_CLOSE", state: "enabled", handling: "system" }
+      ] } };
+      function configureChrome() { if (window.kindle && window.kindle.messaging) window.kindle.messaging.sendMessage("com.lab126.chromebar", "configureChrome", chromeBar); }
+      if (window.kindle && window.kindle.appmgr) window.kindle.appmgr.ongo = configureChrome;
       configureChrome();
     }());
   </script>
