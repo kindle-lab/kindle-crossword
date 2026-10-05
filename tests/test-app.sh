@@ -8,9 +8,17 @@ test -f "$ROOT/app/core.js"
 test -f "$ROOT/app/app.js"
 test -f "$ROOT/app/app.css"
 
-grep -F 'version="0.4.0"' "$ROOT/app/config.xml" >/dev/null
-grep -F 'internetRequired" value="no"' "$ROOT/app/config.xml" >/dev/null
-grep -F '<access origin="*"' "$ROOT/app/config.xml" >/dev/null
+grep -F 'version="0.4.1"' "$ROOT/app/config.xml" >/dev/null
+grep -F '<kindle:cookiejar>' "$ROOT/app/config.xml" >/dev/null
+grep -F 'maxConnectionsPerProxy' "$ROOT/app/config.xml" >/dev/null
+grep -F '<param name="todo" value="yes" />' "$ROOT/app/config.xml" >/dev/null
+grep -F '<param name="winmgrUtils" value="yes" />' "$ROOT/app/config.xml" >/dev/null
+grep -F '<kindle:app name="com.lab126.readnow" value="yes" />' "$ROOT/app/config.xml" >/dev/null
+grep -F 'internetRequired" value="yes"' "$ROOT/app/config.xml" >/dev/null
+if grep -F '<access origin="*"' "$ROOT/app/config.xml" >/dev/null; then
+    echo "unproven W3C access element must not be in Kindle Mesquite config" >&2
+    exit 1
+fi
 grep -F 'id="cell-input"' "$ROOT/app/index.html" >/dev/null
 grep -F 'id="article-link"' "$ROOT/app/index.html" >/dev/null
 grep -F '<script src="core.js"></script>' "$ROOT/app/index.html" >/dev/null
