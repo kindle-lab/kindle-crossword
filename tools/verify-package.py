@@ -10,7 +10,7 @@ with tarfile.open(archive_path, "r:gz") as archive:
     manifest = json.load(archive.extractfile("manifest.json"))
     assert manifest["manifest_version"] == 2
     assert manifest["id"] == "korean-crossword"
-    assert manifest["version"] == [0, 4, 2]
+    assert manifest["version"] == [0, 4, 3]
     assert manifest["supported_platforms"] == ["kindlehf"]
     assert manifest["dependencies"] == []
     required = (
@@ -42,7 +42,7 @@ with tarfile.open(archive_path, "r:gz") as archive:
     unregister = archive.extractfile("scripts/unregister-app.sh").read().decode("utf-8")
     scriptlet = archive.extractfile("scriptlet/korean-crossword.sh").read().decode("utf-8")
     assert "kindle.lab.crossword" in config
-    assert 'version="0.4.2"' in config
+    assert 'version="0.4.3"' in config
     assert '<kindle:cookiejar>' in config
     assert 'maxConnectionsPerProxy' in config
     assert '<param name="todo" value="yes" />' in config
@@ -64,4 +64,4 @@ with tarfile.open(archive_path, "r:gz") as archive:
     assert 'chmod 755 /var/local/mesquite "$TMP_TARGET"' in install
     assert "/mnt/us/korean-crossword-cover.png" in scriptlet
     assert "/mnt/us/documents/Korean Crossword.sh" in install
-print("Verified Korean Crossword Mesquite KPM package v0.4.2")
+print("Verified Korean Crossword Mesquite KPM package v0.4.3")

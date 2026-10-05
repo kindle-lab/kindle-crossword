@@ -48,6 +48,6 @@ if ! "$SELF_DIR/scripts/register-app.sh"; then
 fi
 rm -rf "$OLD_TARGET" "$SCRIPTLET_OLD"
 trap - HUP INT TERM
-echo "한국일보 크로스워드 v0.4.2 독립 앱이 설치되었습니다."
+echo "한국일보 크로스워드 v0.4.3 독립 앱이 설치되었습니다."
 echo "기존 한국어 IME는 자동 설치하지 않았으며, 앱의 표준 입력창에서 사용할 수 있습니다."
 echo "퍼즐 캐시와 진행 데이터는 삭제하지 않고 보존됩니다."

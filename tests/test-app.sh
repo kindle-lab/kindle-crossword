@@ -8,7 +8,7 @@ test -f "$ROOT/app/core.js"
 test -f "$ROOT/app/app.js"
 test -f "$ROOT/app/app.css"
 
-grep -F 'version="0.4.2"' "$ROOT/app/config.xml" >/dev/null
+grep -F 'version="0.4.3"' "$ROOT/app/config.xml" >/dev/null
 grep -F '<kindle:cookiejar>' "$ROOT/app/config.xml" >/dev/null
 grep -F 'maxConnectionsPerProxy' "$ROOT/app/config.xml" >/dev/null
 grep -F '<param name="todo" value="yes" />' "$ROOT/app/config.xml" >/dev/null

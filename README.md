@@ -60,7 +60,7 @@ make package
 - `dist/korean-crossword-kindlehf.kpkg`
 - `dist/SHA256SUMS`
 
-태그 `v0.4.1`을 push하면 GitHub Actions가 같은 검증을 거쳐 Release asset을 만듭니다.
+태그 `v0.4.3`을 push하면 GitHub Actions가 같은 검증을 거쳐 Release asset을 만듭니다.
 
 ## KPM 설치
 
@@ -84,7 +84,7 @@ make package
 
 실기기 확인 필요:
 
-- Vera 탈옥 Kindle Basic 11세대에서 v0.4.1 Library 실행
+- Vera 탈옥 Kindle Basic 11세대에서 v0.4.3 Library 실행
 - Mesquite의 CloudFront HTTPS/CORS
 - `kindle-korean-ime` 조합 입력
 - 터치/포커스/자동 다음 칸

@@ -4,7 +4,7 @@
   "name": "한국일보 크로스워드",
   "author": "kindle-lab",
   "description": "한국일보 실제 크로스워드를 Kindle에서 푸는 독립 클라이언트",
-  "version": [0, 4, 2],
+  "version": [0, 4, 3],
   "dependencies": [],
   "supported_platforms": ["kindlehf"]
 }

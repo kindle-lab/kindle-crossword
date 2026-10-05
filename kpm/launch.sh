@@ -14,6 +14,7 @@ LOG=/mnt/us/korean-crossword-launch.log
     echo "target=$TARGET"
     [ -x /usr/bin/mesquite ] && echo "mesquite=ok" || echo "mesquite=missing"
     [ -f "$TARGET/config.xml" ] && echo "config=ok" || echo "config=missing"
+    ls -ld "$TARGET" "$TARGET/config.xml" "$TARGET/index.html" 2>&1 || true
 } >>"$LOG" 2>&1
 
 if ! "$SELF_DIR/scripts/register-app.sh" >>"$LOG" 2>&1; then
