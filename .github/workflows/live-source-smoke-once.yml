@@ -27,12 +27,14 @@ jobs:
           const puzzle = core.buildPuzzle(raw);
           const articleCount = puzzle.clues.filter(c => !!c.articleUrl).length;
           if (!puzzle.clues.length) throw new Error('live puzzle has no clues');
-          if (!puzzle.identity || !puzzle.identity.key) throw new Error('live puzzle identity missing');
+          if (!puzzle.id || !puzzle.fingerprint) throw new Error('live puzzle identity missing');
           console.log(JSON.stringify({
             clueCount: puzzle.clues.length,
             articleLinkCount: articleCount,
-            identitySource: puzzle.identity.source,
-            identityKey: puzzle.identity.key,
+            puzzleId: puzzle.id,
+            sourceIdPresent: !!puzzle.sourceId,
+            sourceDate: puzzle.sourceDate || null,
+            fingerprint: puzzle.fingerprint,
             gridSize: core.GRID_SIZE
           }));
           NODE
